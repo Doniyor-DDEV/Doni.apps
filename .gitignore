@@ -1,0 +1,13 @@
+# Keraksiz papkalar
+new   123245346578/
+tG_BOT.HTML
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS fayllar
+.DS_Store
+Thumbs.db
