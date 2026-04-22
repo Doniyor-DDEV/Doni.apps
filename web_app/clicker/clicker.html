@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            background: #f1c40f;
+            font-family: sans-serif;
+        }
+
+        #btn {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 10px solid #d35400;
+            background: #e67e22;
+            font-size: 40px;
+            cursor: pointer;
+            margin-top: 50px;
+        }
+
+        #btn:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tangalar: <span id="c">0</span></h1>
+    <button id="btn" onclick="tap()">💰</button>
+    <script>
+        let count = 0;
+        function tap() { count++; document.getElementById('c').innerText = count; }
+    </script>
+</body>
+
+</html>

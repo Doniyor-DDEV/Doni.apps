@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #e5ddd5;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #chat {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .msg {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 80%;
+        }
+
+        .bot {
+            background: white;
+            align-self: flex-start;
+        }
+
+        .user {
+            background: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        input {
+            padding: 15px;
+            border: none;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat">
+        <div class="msg bot">Salom! Men o'ylagan sonni toping (1-10).</div>
+    </div>
+    <input type="number" id="inp" placeholder="Sonni yozing..." onchange="guess(this.value); this.value=''">
+    <script>
+        let num = Math.floor(Math.random() * 10) + 1;
+        function guess(v) {
+            const c = document.getElementById('chat');
+            c.innerHTML += `<div class="msg user">${v}</div>`;
+            if (v == num) { c.innerHTML += `<div class="msg bot">To'g'ri! 🎉 Yangi son o'yladim.</div>`; num = Math.floor(Math.random() * 10) + 1; }
+            else { c.innerHTML += `<div class="msg bot">Xato, qayta urinib ko'ring.</div>`; }
+            c.scrollTop = c.scrollHeight;
+        }
+    </script>
+</body>
+
+</html>

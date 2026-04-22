@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            font-family: sans-serif;
+            background: #ecf0f1;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .plot {
+            width: 100px;
+            height: 100px;
+            background: #95a5a6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Shahar qurish: <span id="m">100</span>$</h3>
+    <div class="grid" id="g"></div>
+    <script>
+        let money = 100;
+        for (let i = 0; i < 9; i++) {
+            const p = document.createElement('div'); p.className = 'plot'; p.innerText = '🌳';
+            p.onclick = () => {
+                if (money >= 20 && p.innerText === '🌳') { money -= 20; p.innerText = '🏠'; document.getElementById('m').innerText = money; }
+            };
+            document.getElementById('g').appendChild(p);
+        }
+    </script>
+</body>
+
+</html>

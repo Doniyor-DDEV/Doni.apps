@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Mohira Game Hub</title>
+    <style>
+        /* Asosiy fon va shriftlar */
+        body {
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px #0088cc;
+        }
+
+        /* O'yinlar setkasi */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* O'yin kartochkasi dizayni (Glassmorphism) */
+        .game-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 20px 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Bosilgandagi effekt */
+        .game-card:active {
+            transform: scale(0.92);
+            background: rgba(0, 136, 204, 0.3);
+            border-color: #0088cc;
+        }
+
+        .game-card span {
+            font-size: 38px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        }
+
+        .game-card b {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            opacity: 0.5;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🕹 MOHIRA GAMES</h1>
+
+    <div class="grid">
+        <a href="web_app/2048/index.html" class="game-card"><span>🔢</span><b>2048</b></a>
+        <a href="web_app/aim-trainer/index.html" class="game-card"><span>🎯</span><b>Aim Trainer</b></a>
+        <a href="web_app/archery/index.html" class="game-card"><span>🏹</span><b>Archery</b></a>
+        <a href="web_app/balance-game/index.html" class="game-card"><span>⚖️</span><b>Balance</b></a>
+        <a href="web_app/bike-racing/index.html" class="game-card"><span>🏍️</span><b>Bike Racing</b></a>
+        <a href="web_app/boss-fight/index.html" class="game-card"><span>👹</span><b>Boss Fight</b></a>
+        <a href="web_app/brick-breaker/index.html" class="game-card"><span>🧱</span><b>Brick Breaker</b></a>
+        <a href="web_app/bubble-shooter/index.html" class="game-card"><span>🎈</span><b>Bubble Shooter</b></a>
+        <a href="web_app/cannon/index.html" class="game-card"><span>💣</span><b>Cannon</b></a>
+        <a href="web_app/car-racing/index.html" class="game-card"><span>🏎️</span><b>Car Racing</b></a>
+
+        <a href="web_app/card-games/index.html" class="game-card"><span>🃏</span><b>Cards</b></a>
+        <a href="web_app/chat-game/index.html" class="game-card"><span>💬</span><b>Chat Game</b></a>
+        <a href="web_app/city-builder/index.html" class="game-card"><span>🏙️</span><b>City Builder</b></a>
+        <a href="web_app/clicker/index.html" class="game-card"><span>💰</span><b>Clicker</b></a>
+        <a href="web_app/code-breaker/index.html" class="game-card"><span>🔐</span><b>Code Breaker</b></a>
+        <a href="web_app/color-switch/index.html" class="game-card"><span>🌈</span><b>Color Switch</b></a>
+        <a href="web_app/connect-4/index.html" class="game-card"><span>🔵</span><b>Connect 4</b></a>
+        <a href="web_app/cooking/index.html" class="game-card"><span>🍳</span><b>Cooking</b></a>
+        <a href="web_app/dama/index.html" class="game-card"><span>🏁</span><b>Dama</b></a>
+        <a href="web_app/dice-game/index.html" class="game-card"><span>🎲</span><b>Dice Game</b></a>
+
+        <a href="web_app/doodle-jump/index.html" class="game-card"><span>🚀</span><b>Doodle Jump</b></a>
+        <a href="web_app/drawing-game/index.html" class="game-card"><span>🎨</span><b>Drawing</b></a>
+        <a href="web_app/drift-simulator/index.html" class="game-card"><span>💨</span><b>Drift</b></a>
+        <a href="web_app/dungeon-crawler/index.html" class="game-card"><span>🗝️</span><b>Dungeon</b></a>
+        <a href="web_app/endless-driving/index.html" class="game-card"><span>🛣️</span><b>Driving</b></a>
+        <a href="web_app/endless-runner/index.html" class="game-card"><span>🏃</span><b>Runner</b></a>
+        <a href="web_app/evolution-game/index.html" class="game-card"><span>🧬</span><b>Evolution</b></a>
+        <a href="web_app/farming/index.html" class="game-card"><span>🚜</span><b>Farming</b></a>
+        <a href="web_app/fishing/index.html" class="game-card"><span>🎣</span><b>Fishing</b></a>
+        <a href="web_app/flappy-bird/index.html" class="game-card"><span>🐦</span><b>Flappy Bird</b></a>
+    </div>
+
+    <div class="footer">
+        POWERED BY MOHIRA AI
+    </div>
+
+</body>
+
+</html>

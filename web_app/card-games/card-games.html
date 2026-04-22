@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #27ae60;
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .card {
+            height: 80px;
+            background: #fff;
+            border-radius: 5px;
+            color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .hidden {
+            background: #2c3e50;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Juftlarni toping</h3>
+    <div class="grid" id="grid"></div>
+    <script>
+        const icons = ['🍎', '🍎', '🍌', '🍌', '🍇', '🍇', '🍓', '🍓', '🍒', '🍒', '🍍', '🍍', '🥝', '🥝', '🍉', '🍉'];
+        icons.sort(() => 0.5 - Math.random());
+        let first = null, second = null, lock = false;
+        const grid = document.getElementById('grid');
+        icons.forEach((icon, i) => {
+            const card = document.createElement('div');
+            card.className = 'card hidden'; card.innerText = icon;
+            card.onclick = () => {
+                if (lock || card === first) return;
+                card.classList.remove('hidden');
+                if (!first) { first = card; return; }
+                second = card; lock = true;
+                if (first.innerText === second.innerText) { first = null; second = null; lock = false; }
+                else { setTimeout(() => { first.classList.add('hidden'); second.classList.add('hidden'); first = null; second = null; lock = false; }, 800); }
+            };
+            grid.appendChild(card);
+        });
+    </script>
+</body>
+
+</html>

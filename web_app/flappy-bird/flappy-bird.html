@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0; overflow:hidden">
+    <canvas id="fb" width="320" height="480" style="background:skyblue"></canvas>
+    <script>
+        const ctx = document.getElementById('fb').getContext('2d');
+        let by = 200, bv = 0, px = 320;
+        function draw() {
+            ctx.clearRect(0, 0, 320, 480);
+            bv += 0.4; by += bv;
+            ctx.fillStyle = "yellow"; ctx.fillRect(50, by, 30, 30);
+            ctx.fillStyle = "green"; ctx.fillRect(px, 0, 50, 150); ctx.fillRect(px, 250, 50, 230);
+            px -= 3; if (px < -50) px = 320;
+            if (by > 480 || (px < 80 && px > 0 && (by < 150 || by > 220))) { alert("Yiqildingiz!"); location.reload(); }
+            requestAnimationFrame(draw);
+        }
+        window.onclick = () => bv = -7;
+        draw();
+    </script>
+</body>
+
+</html>

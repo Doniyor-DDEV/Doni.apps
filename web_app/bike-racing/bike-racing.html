@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            background: #333;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        #road {
+            width: 100vw;
+            height: 100vh;
+            background: #555;
+            position: relative;
+            border-left: 10px dashed white;
+            border-right: 10px dashed white;
+            box-sizing: border-box;
+        }
+
+        #bike {
+            width: 40px;
+            height: 70px;
+            background: #e74c3c;
+            position: absolute;
+            bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .enemy {
+            width: 40px;
+            height: 70px;
+            background: #f1c40f;
+            position: absolute;
+            top: -100px;
+            border-radius: 5px;
+        }
+
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-size: 20px;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="score">Masofa: 0m</div>
+    <div id="road">
+        <div id="bike"></div>
+    </div>
+    <script>
+        const bike = document.getElementById('bike');
+        const road = document.getElementById('road');
+        let bikeX = window.innerWidth / 2 - 20, score = 0;
+        bike.style.left = bikeX + "px";
+
+        // Boshqaruv
+        window.addEventListener('touchmove', e => {
+            bikeX = e.touches[0].clientX - 20;
+            bike.style.left = bikeX + "px";
+        });
+
+        function createEnemy() {
+            const enemy = document.createElement('div');
+            enemy.className = 'enemy';
+            enemy.style.left = Math.random() * (window.innerWidth - 40) + "px";
+            road.appendChild(enemy);
+            let enemyY = -100;
+            let interval = setInterval(() => {
+                enemyY += 5;
+                enemy.style.top = enemyY + "px";
+                if (enemyY > window.innerHeight) { clearInterval(interval); enemy.remove(); score += 10; document.getElementById('score').innerText = "Masofa: " + score + "m"; }
+                // To'qnashuv
+                let bRect = bike.getBoundingClientRect(), eRect = enemy.getBoundingClientRect();
+                if (!(bRect.right < eRect.left || bRect.left > eRect.right || bRect.bottom < eRect.top || bRect.top > eRect.bottom)) {
+                    alert("Avariya! Masofa: " + score + "m"); location.reload();
+                }
+            }, 20);
+        }
+        setInterval(createEnemy, 1500);
+    </script>
+</body>
+
+</html>

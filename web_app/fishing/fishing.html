@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+
+<body style="background:lightblue; text-align:center">
+    <h2>Baliqni kuting...</h2>
+    <div id="fish" style="font-size:50px; cursor:pointer" onclick="catchFish()">🌊</div>
+    <script>
+        function start() { setTimeout(() => document.getElementById('fish').innerText = "🐟", Math.random() * 3000); }
+        function catchFish() { if (document.getElementById('fish').innerText == "🐟") { alert("Tutdingiz! 🎣"); location.reload(); } }
+        start();
+    </script>
+</body>
+
+</html>

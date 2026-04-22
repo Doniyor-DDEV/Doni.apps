@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            background: #2f3542;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        #game {
+            width: 300px;
+            height: 100vh;
+            background: #57606f;
+            position: relative;
+            border-left: 5px solid yellow;
+            border-right: 5px solid yellow;
+        }
+
+        .car {
+            width: 40px;
+            height: 70px;
+            border-radius: 5px;
+            position: absolute;
+        }
+
+        #player {
+            background: #ff4757;
+            bottom: 20px;
+            left: 130px;
+            transition: 0.1s;
+        }
+
+        .enemy {
+            background: #1e90ff;
+            top: -100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game">
+        <div id="player" class="car"></div>
+    </div>
+    <script>
+        const game = document.getElementById('game'), player = document.getElementById('player');
+        let playerX = 130;
+
+        window.addEventListener('touchstart', e => {
+            playerX = (e.touches[0].clientX < window.innerWidth / 2) ? 50 : 210;
+            player.style.left = playerX + "px";
+        });
+
+        function spawnEnemy() {
+            const enemy = document.createElement('div');
+            enemy.className = 'car enemy';
+            enemy.style.left = (Math.random() > 0.5 ? 50 : 210) + "px";
+            game.appendChild(enemy);
+            let y = -100;
+            let move = setInterval(() => {
+                y += 7; enemy.style.top = y + "px";
+                if (y > window.innerHeight) { clearInterval(move); enemy.remove(); }
+                let p = player.getBoundingClientRect(), e = enemy.getBoundingClientRect();
+                if (!(p.right < e.left || p.left > e.right || p.bottom < e.top || p.top > e.bottom)) {
+                    alert("O'yin tugadi!"); location.reload();
+                }
+            }, 20);
+        }
+        setInterval(spawnEnemy, 1200);
+    </script>
+</body>
+
+</html>

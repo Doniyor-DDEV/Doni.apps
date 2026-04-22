@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            color: white;
+            font-family: sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #game-container {
+            width: 100vw;
+            height: 80vh;
+            position: relative;
+            cursor: crosshair;
+        }
+
+        .target {
+            width: 40px;
+            height: 40px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+            border: 4px solid white;
+            box-shadow: 0 0 10px red;
+        }
+
+        .stats {
+            padding: 20px;
+            font-size: 20px;
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stats">Ball: <span id="score">0</span> | Vaqt: <span id="time">30</span></div>
+    <div id="game-container"></div>
+    <script>
+        let score = 0, timeLeft = 30, container = document.getElementById('game-container');
+        function spawn() {
+            if (timeLeft <= 0) return;
+            const target = document.createElement('div');
+            target.className = 'target';
+            target.style.top = Math.random() * (container.offsetHeight - 50) + "px";
+            target.style.left = Math.random() * (container.offsetWidth - 50) + "px";
+            target.onclick = () => { score++; document.getElementById('score').innerText = score; target.remove(); spawn(); };
+            container.appendChild(target);
+            setTimeout(() => target.remove(), 1500);
+        }
+        let timer = setInterval(() => {
+            timeLeft--; document.getElementById('time').innerText = timeLeft;
+            if (timeLeft <= 0) { clearInterval(timer); alert("Vaqt tugadi! Ball: " + score); location.reload(); }
+        }, 1000);
+        spawn(); spawn();
+    </script>
+</body>
+
+</html>

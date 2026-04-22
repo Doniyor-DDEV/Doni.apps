@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #faf8ef;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        canvas {
+            background: #fff;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c" width="300" height="400"></canvas>
+    <script>
+        const ctx = document.getElementById('c').getContext('2d');
+        let p = { x: 150, y: 350, v: 0 }, platforms = [];
+        for (let i = 0; i < 5; i++) platforms.push({ x: Math.random() * 250, y: i * 80 });
+        function draw() {
+            ctx.clearRect(0, 0, 300, 400);
+            ctx.fillStyle = "green"; platforms.forEach(pl => ctx.fillRect(pl.x, pl.y, 50, 10));
+            ctx.fillStyle = "red"; ctx.fillRect(p.x, p.y, 20, 20);
+            p.v += 0.2; p.y += p.v;
+            platforms.forEach(pl => {
+                if (p.v > 0 && p.x + 20 > pl.x && p.x < pl.x + 50 && p.y + 20 > pl.y && p.y + 20 < pl.y + 10) p.v = -8;
+            });
+            if (p.y > 400) { alert("Yiqildingiz!"); location.reload(); }
+            requestAnimationFrame(draw);
+        }
+        window.onmousemove = (e) => p.x = e.clientX - 10;
+        window.ontouchmove = (e) => p.x = e.touches[0].clientX - 10;
+        draw();
+    </script>
+</body>
+
+</html>

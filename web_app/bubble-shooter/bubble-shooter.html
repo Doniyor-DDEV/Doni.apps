@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        canvas {
+            background: #333;
+            border: 2px solid #555;
+            margin-top: 10px;
+        }
+
+        .ui {
+            padding: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ui">Ball: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="320" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas'), ctx = canvas.getContext('2d');
+        let score = 0;
+        let bubbles = [];
+        const colors = ['#ff4757', '#2ed573', '#1e90ff', '#eccc68'];
+
+        // Dastlabki sharchalar
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 8; j++) {
+                bubbles.push({ x: j * 40 + 20, y: i * 40 + 20, color: colors[Math.floor(Math.random() * colors.length)], active: true });
+            }
+        }
+
+        let shooter = { x: 160, y: 380, color: colors[Math.floor(Math.random() * colors.length)] };
+        let projectile = null;
+
+        function draw() {
+            ctx.clearRect(0, 0, 320, 400);
+            bubbles.forEach(b => {
+                if (b.active) {
+                    ctx.fillStyle = b.color; ctx.beginPath(); ctx.arc(b.x, b.y, 18, 0, Math.PI * 2); ctx.fill();
+                }
+            });
+
+            ctx.fillStyle = shooter.color; ctx.beginPath(); ctx.arc(shooter.x, shooter.y, 18, 0, Math.PI * 2); ctx.fill();
+
+            if (projectile) {
+                projectile.y -= 7;
+                ctx.fillStyle = projectile.color; ctx.beginPath(); ctx.arc(projectile.x, projectile.y, 18, 0, Math.PI * 2); ctx.fill();
+
+                bubbles.forEach(b => {
+                    if (b.active && Math.hypot(projectile.x - b.x, projectile.y - b.y) < 30) {
+                        if (projectile.color === b.color) {
+                            b.active = false; score += 10;
+                            document.getElementById('score').innerText = score;
+                        }
+                        projectile = null;
+                        shooter.color = colors[Math.floor(Math.random() * colors.length)];
+                    }
+                });
+                if (projectile && projectile.y < 0) { projectile = null; shooter.color = colors[Math.floor(Math.random() * colors.length)]; }
+            }
+            requestAnimationFrame(draw);
+        }
+
+        canvas.onclick = (e) => {
+            if (!projectile) {
+                projectile = { x: 160, y: 380, color: shooter.color };
+            }
+        };
+        draw();
+    </script>
+</body>
+
+</html>

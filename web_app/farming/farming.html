@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <button onclick="plant()">Ekish 🌾</button>
+    <div id="field" style="font-size:50px"></div>
+    <script>
+        function plant() {
+            let f = document.getElementById('field');
+            f.innerText = "🌱";
+            setTimeout(() => f.innerText = "🌿", 2000);
+            setTimeout(() => f.innerText = "🌾", 4000);
+        }
+    </script>
+</body>
+
+</html>

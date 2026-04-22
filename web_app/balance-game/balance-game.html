@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #ball {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #3498db, #2980b9);
+            border-radius: 50%;
+            position: absolute;
+            transition: 0.1s linear;
+        }
+
+        #platform {
+            width: 300px;
+            height: 300px;
+            border: 10px solid #34495e;
+            border-radius: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="platform">
+        <div id="ball" style="top: 130px; left: 130px;"></div>
+    </div>
+    <script>
+        let b = document.getElementById('ball'), x = 130, y = 130, vx = 0, vy = 0;
+        window.addEventListener('deviceorientation', (e) => {
+            vx = e.gamma / 5; vy = e.beta / 5;
+        });
+        // Desktop uchun klaviatura
+        window.onkeydown = (e) => {
+            if (e.key == "ArrowLeft") vx = -3; if (e.key == "ArrowRight") vx = 3;
+            if (e.key == "ArrowUp") vy = -3; if (e.key == "ArrowDown") vy = 3;
+        };
+        setInterval(() => {
+            x += vx; y += vy;
+            if (x < 0 || x > 260 || y < 0 || y > 260) { alert("Yiqildingiz!"); x = 130; y = 130; vx = 0; vy = 0; }
+            b.style.left = x + "px"; b.style.top = y + "px";
+        }, 30);
+    </script>
+</body>
+
+</html>

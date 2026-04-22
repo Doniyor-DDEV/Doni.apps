@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+<body style="text-align:center">
+    <h1 id="d">🎲</h1>
+    <button onclick="roll()" style="padding:10px">Tashlash</button>
+    <script>
+        function roll() {
+            const res = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('d').innerText = res;
+        }
+    </script>
+</body>
+
+</html>

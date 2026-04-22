@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        #car {
+            width: 30px;
+            height: 50px;
+            background: red;
+            position: absolute;
+            transition: 0.1s;
+        }
+    </style>
+</head>
+
+<body style="background:#444">
+    <div id="car" style="top:200px; left:150px"></div>
+    <script>
+        let a = 0, x = 150, y = 200, car = document.getElementById('car');
+        window.onkeydown = (e) => {
+            if (e.key == "ArrowLeft") a -= 15; if (e.key == "ArrowRight") a += 15;
+            x += Math.sin(a * Math.PI / 180) * 10; y -= Math.cos(a * Math.PI / 180) * 10;
+            car.style.transform = `rotate(${a}deg)`; car.style.left = x + "px"; car.style.top = y + "px";
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h3>Burger tayyorlang!</h3>
+    <p>Kerak: 🥩 + 🧀 + 🍞</p>
+    <button onclick="add('🥩')">🥩</button>
+    <button onclick="add('🧀')">🧀</button>
+    <button onclick="add('🍞')">🍞</button>
+    <p id="plate">Tovoq: </p>
+    <script>
+        let p = "";
+        function add(i) { p += i; document.getElementById('plate').innerText = "Tovoq: " + p; if (p === "🥩🧀🍞") alert("Tayyor!"); }
+    </script>
+</body>
+
+</html>

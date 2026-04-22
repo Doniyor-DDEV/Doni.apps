@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<body style="margin:0; overflow:hidden">
+    <canvas id="g" width="300" height="400" style="background:#333"></canvas>
+    <script>
+        const ctx = document.getElementById('g').getContext('2d');
+        let ty = 0;
+        function loop() {
+            ctx.clearRect(0, 0, 300, 400);
+            ctx.fillStyle = "yellow"; ctx.fillRect(145, ty, 10, 50); ctx.fillRect(145, ty + 100, 10, 50);
+            ty = (ty + 5) % 400; requestAnimationFrame(loop);
+        }
+        loop();
+    </script>
+</body>
+
+</html>

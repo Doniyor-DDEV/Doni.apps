@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #dff9fb;
+            overflow: hidden;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        canvas {
+            border-bottom: 5px solid #6ab04c;
+            background: linear-gradient(#70a1ff, #dff9fb);
+        }
+    </style>
+</head>
+
+<body>
+    <div style="padding:10px">Nishonni uring! Ball: <span id="sc">0</span></div>
+    <canvas id="c"></canvas>
+    <script>
+        const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = 300;
+        let score = 0, angle = -45, ball = null;
+        let target = { x: canvas.width - 50, y: 250 };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // To'p (Cannon)
+            ctx.save();
+            ctx.translate(30, 270);
+            ctx.rotate(angle * Math.PI / 180);
+            ctx.fillStyle = "#2f3542"; ctx.fillRect(0, -10, 40, 20);
+            ctx.restore();
+
+            // Nishon
+            ctx.fillStyle = "#eb4d4b"; ctx.beginPath(); ctx.arc(target.x, target.y, 20, 0, Math.PI * 2); ctx.fill();
+
+            if (ball) {
+                ball.x += ball.vx; ball.y += ball.vy; ball.vy += 0.2;
+                ctx.fillStyle = "black"; ctx.beginPath(); ctx.arc(ball.x, ball.y, 5, 0, Math.PI * 2); ctx.fill();
+                if (Math.hypot(ball.x - target.x, ball.y - target.y) < 25) {
+                    score++; document.getElementById('sc').innerText = score;
+                    ball = null; target.x = Math.random() * (canvas.width - 100) + 100;
+                } else if (ball.y > 300) ball = null;
+            }
+            requestAnimationFrame(draw);
+        }
+        canvas.onclick = () => {
+            if (!ball) ball = { x: 30, y: 270, vx: Math.cos(angle * Math.PI / 180) * 10, vy: Math.sin(angle * Math.PI / 180) * 10 };
+        };
+        // Burchakni o'zgartirish
+        setInterval(() => { angle = (angle < -10) ? angle + 1 : -80; }, 50);
+        draw();
+    </script>
+</body>
+
+</html>

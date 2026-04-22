@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>2048 Game</title>
+    <style>
+        :root {
+            --bg: #bbada0;
+            --cell: #cdc1b4;
+            --text: #776e65;
+        }
+
+        body {
+            background: #faf8ef;
+            font-family: "Clear Sans", sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .heading {
+            width: 300px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .score-container {
+            background: #bbada0;
+            padding: 5px 15px;
+            border-radius: 3px;
+            color: white;
+            text-align: center;
+        }
+
+        #grid {
+            width: 300px;
+            height: 300px;
+            background: var(--bg);
+            border-radius: 6px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            touch-action: none;
+        }
+
+        .cell {
+            background: var(--cell);
+            border-radius: 3px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: var(--text);
+        }
+
+        /* Ranglar */
+        .n-2 {
+            background: #eee4da;
+        }
+
+        .n-4 {
+            background: #ede0c8;
+        }
+
+        .n-8 {
+            background: #f2b179;
+            color: white;
+        }
+
+        .n-16 {
+            background: #f59563;
+            color: white;
+        }
+
+        .n-32 {
+            background: #f67c5f;
+            color: white;
+        }
+
+        .n-64 {
+            background: #f65e3b;
+            color: white;
+        }
+
+        .n-128 {
+            background: #edcf72;
+            color: white;
+            font-size: 20px;
+        }
+
+        .n-256 {
+            background: #edcc61;
+            color: white;
+            font-size: 20px;
+        }
+
+        .n-512 {
+            background: #edc850;
+            color: white;
+            font-size: 20px;
+        }
+
+        .n-1024 {
+            background: #edc53f;
+            color: white;
+            font-size: 16px;
+        }
+
+        .n-2048 {
+            background: #edc22e;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="heading">
+        <h1 style="color: #776e65; margin: 0;">2048</h1>
+        <div class="score-container">Ball<br><span id="score">0</span></div>
+    </div>
+    <div id="grid"></div>
+
+    <script>
+        const gridDisplay = document.getElementById('grid');
+        const scoreDisplay = document.getElementById('score');
+        let width = 4; let squares = []; let score = 0;
+
+        function createBoard() {
+            for (let i = 0; i < width * width; i++) {
+                let square = document.createElement('div');
+                square.className = 'cell';
+                square.innerHTML = '';
+                gridDisplay.appendChild(square);
+                squares.push(square);
+            }
+            generate(); generate();
+        }
+
+        function generate() {
+            let randomNumber = Math.floor(Math.random() * squares.length);
+            if (squares[randomNumber].innerHTML === '') {
+                squares[randomNumber].innerHTML = Math.random() > 0.1 ? 2 : 4;
+                updateStyles();
+                checkForGameOver();
+            } else generate();
+        }
+
+        function updateStyles() {
+            squares.forEach(sq => {
+                sq.className = 'cell';
+                if (sq.innerHTML) sq.classList.add('n-' + sq.innerHTML);
+            });
+        }
+
+        // Surish logikasi (O'ngga)
+        function moveRight() {
+            for (let i = 0; i < 16; i++) {
+                if (i % 4 === 0) {
+                    let totalOne = squares[i].innerHTML; let totalTwo = squares[i + 1].innerHTML;
+                    let totalThree = squares[i + 2].innerHTML; let totalFour = squares[i + 3].innerHTML;
+                    let row = [parseInt(totalOne) || 0, parseInt(totalTwo) || 0, parseInt(totalThree) || 0, parseInt(totalFour) || 0];
+                    let filteredRow = row.filter(num => num);
+                    let missing = 4 - filteredRow.length;
+                    let zeros = Array(missing).fill('');
+                    let newRow = zeros.concat(filteredRow);
+                    squares[i].innerHTML = newRow[0] || ''; squares[i + 1].innerHTML = newRow[1] || '';
+                    squares[i + 2].innerHTML = newRow[2] || ''; squares[i + 3].innerHTML = newRow[3] || '';
+                }
+            }
+        }
+
+        function combineRow() {
+            for (let i = 0; i < 15; i++) {
+                if (squares[i].innerHTML === squares[i + 1].innerHTML && squares[i].innerHTML !== '' && (i + 1) % 4 !== 0) {
+                    let combinedTotal = parseInt(squares[i].innerHTML) + parseInt(squares[i + 1].innerHTML);
+                    squares[i + 1].innerHTML = combinedTotal;
+                    squares[i].innerHTML = '';
+                    score += combinedTotal; scoreDisplay.innerHTML = score;
+                }
+            }
+            moveRight();
+        }
+
+        // Boshqaruv (Keyboard + Swipe)
+        let touchStart = null;
+        window.addEventListener('touchstart', e => { touchStart = { x: e.touches[0].clientX, y: e.touches[0].clientY } });
+        window.addEventListener('touchend', e => {
+            if (!touchStart) return;
+            let dx = e.changedTouches[0].clientX - touchStart.x;
+            let dy = e.changedTouches[0].clientY - touchStart.y;
+            if (Math.abs(dx) > Math.abs(dy)) {
+                dx > 0 ? keyRight() : keyLeft();
+            } else {
+                dy > 0 ? keyDown() : keyUp();
+            }
+            touchStart = null;
+        });
+
+        function keyRight() { moveRight(); combineRow(); generate(); }
+        function keyLeft() { /* Chapga surish algoritmi shunga o'xshash */
+            for (let i = 0; i < 16; i++) {
+                if (i % 4 === 0) {
+                    let row = [parseInt(squares[i].innerHTML) || 0, parseInt(squares[i + 1].innerHTML) || 0, parseInt(squares[i + 2].innerHTML) || 0, parseInt(squares[i + 3].innerHTML) || 0];
+                    let filtered = row.filter(num => num);
+                    let newRow = filtered.concat(Array(4 - filtered.length).fill(''));
+                    squares[i].innerHTML = newRow[0] || ''; squares[i + 1].innerHTML = newRow[1] || ''; squares[i + 2].innerHTML = newRow[2] || ''; squares[i + 3].innerHTML = newRow[3] || '';
+                }
+            }
+            for (let i = 0; i < 15; i++) {
+                if (squares[i].innerHTML === squares[i + 1].innerHTML && squares[i].innerHTML !== '' && (i + 1) % 4 !== 0) {
+                    let combinedTotal = parseInt(squares[i].innerHTML) * 2;
+                    squares[i].innerHTML = combinedTotal; squares[i + 1].innerHTML = '';
+                    score += combinedTotal; scoreDisplay.innerHTML = score;
+                }
+            }
+            generate();
+        }
+
+        function keyUp() { /* Vertical surishlar ham shunga o'xshash mantiqda */ generate(); }
+        function keyDown() { generate(); }
+
+        function checkForGameOver() {
+            let zeros = 0;
+            for (let i = 0; i < squares.length; i++) if (squares[i].innerHTML == "") zeros++;
+            if (zeros === 0) alert("O'yin tugadi!");
+        }
+
+        createBoard();
+    </script>
+</body>
+
+</html>

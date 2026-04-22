@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #87CEEB;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            background: white;
+            border-bottom: 5px solid green;
+        }
+
+        .info {
+            font-family: sans-serif;
+            font-weight: bold;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="info">Ekranni bosing va qo'yib yuboring! Ball: <span id="s">0</span></div>
+    <canvas id="c"></canvas>
+    <script>
+        const canvas = document.getElementById('c'), ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = 400;
+        let score = 0, arrow = { x: 50, y: 350, vx: 0, vy: 0, active: false };
+        let target = { x: canvas.width - 60, y: 200, r: 30 };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "red"; ctx.beginPath(); ctx.arc(target.x, target.y, target.r, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = "black"; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(arrow.x, arrow.y);
+            ctx.lineTo(arrow.x + 30, arrow.y); ctx.stroke();
+            if (arrow.active) {
+                arrow.x += arrow.vx; arrow.y += arrow.vy; arrow.vy += 0.2;
+                let d = Math.hypot(arrow.x + 30 - target.x, arrow.y - target.y);
+                if (d < target.r) { score++; document.getElementById('s').innerText = score; reset(); }
+                if (arrow.y > canvas.height || arrow.x > canvas.width) reset();
+            }
+            requestAnimationFrame(draw);
+        }
+        function reset() { arrow = { x: 50, y: 350, vx: 0, vy: 0, active: false }; target.y = Math.random() * 300 + 50; }
+        canvas.onmousedown = () => { if (!arrow.active) { arrow.vx = 10; arrow.vy = -10; arrow.active = true; } };
+        draw();
+    </script>
+</body>
+
+</html>

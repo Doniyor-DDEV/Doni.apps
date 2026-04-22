@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            background: #222;
+            display: flex;
+            justify-content: center;
+        }
+
+        canvas {
+            background: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="300" height="400"></canvas>
+    <script>
+        const ctx = document.getElementById('canvas').getContext('2d');
+        let y = 300, colors = ['red', 'blue', 'yellow', 'green'], c = 'red';
+        function draw() {
+            ctx.clearRect(0, 0, 300, 400);
+            ctx.fillStyle = c; ctx.beginPath(); ctx.arc(150, y, 15, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = "white"; ctx.lineWidth = 10; ctx.strokeRect(50, 100, 200, 20);
+            y -= 1; if (y < 0) y = 400;
+            requestAnimationFrame(draw);
+        }
+        window.onclick = () => { c = colors[Math.floor(Math.random() * 4)]; };
+        draw();
+    </script>
+</body>
+
+</html>

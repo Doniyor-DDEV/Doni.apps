@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h3>Kodni toping (3 xonali)</h3>
+    <input id="i" type="text" maxlength="3">
+    <button onclick="check()">Tekshirish</button>
+    <p id="r"></p>
+    <script>
+        let code = "382";
+        function check() {
+            let val = document.getElementById('i').value;
+            let res = "";
+            if (val === code) res = "G'alaba! 🔓";
+            else res = val[0] === code[0] ? "Bitta raqam o'rnida" : "Xato";
+            document.getElementById('r').innerText = res;
+        }
+    </script>
+</body>
+
+</html>

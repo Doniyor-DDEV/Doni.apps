@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .hp-bar {
+            width: 80%;
+            height: 20px;
+            background: #7f8c8d;
+            margin: 10px auto;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #boss-hp {
+            width: 100%;
+            height: 100%;
+            background: #e74c3c;
+            transition: 0.3s;
+        }
+
+        #player-hp {
+            width: 100%;
+            height: 100%;
+            background: #2ecc71;
+            transition: 0.3s;
+        }
+
+        #boss-img {
+            font-size: 80px;
+            margin: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #f1c40f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Yovuz Boss</h2>
+    <div id="boss-img">👹</div>
+    <div class="hp-bar">
+        <div id="boss-hp"></div>
+    </div>
+    <p>Sizning joningiz:</p>
+    <div class="hp-bar">
+        <div id="player-hp"></div>
+    </div>
+    <button onclick="attack()">HUJUM!</button>
+    <script>
+        let bHP = 100, pHP = 100;
+        function attack() {
+            let dmg = Math.floor(Math.random() * 15) + 5;
+            bHP -= dmg;
+            document.getElementById('boss-hp').style.width = bHP + "%";
+            if (bHP <= 0) { alert("G'alaba! Boss mag'lub etildi!"); location.reload(); return; }
+
+            setTimeout(() => {
+                let bDmg = Math.floor(Math.random() * 10) + 5;
+                pHP -= bDmg;
+                document.getElementById('player-hp').style.width = pHP + "%";
+                if (pHP <= 0) { alert("Mag'lubiyat! Boss sizni yutdi!"); location.reload(); }
+            }, 500);
+        }
+    </script>
+</body>
+
+</html>

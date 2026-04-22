@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <canvas id="d" width="300" height="400" style="border:1px solid #000"></canvas><br>
+    <button onclick="location.reload()">Tozalash</button>
+    <script>
+        const c = document.getElementById('d'), ctx = c.getContext('2d');
+        let draw = false;
+        c.onmousedown = () => draw = true; c.onmouseup = () => draw = false;
+        c.onmousemove = (e) => { if (draw) ctx.fillRect(e.offsetX, e.offsetY, 5, 5); };
+        c.ontouchmove = (e) => {
+            let t = e.touches[0], r = c.getBoundingClientRect();
+            ctx.fillRect(t.clientX - r.left, t.clientY - r.top, 5, 5);
+        };
+    </script>
+</body>
+
+</html>
